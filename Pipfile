@@ -10,6 +10,7 @@ django = "==3.0"
 djangorestframework = "*"
 requests = "*"
 bs4 = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.6"
