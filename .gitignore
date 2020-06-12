@@ -1,0 +1,10 @@
+db.sqlite3
+__pycache__
+geckodriver.log
+migrations
+*.pyc
+.env
+.vscode
+.test_data
+docker-compose.yml
+Dockerfile
