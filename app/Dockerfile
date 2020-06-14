@@ -47,4 +47,6 @@ COPY . $APP_HOME
 RUN chown -R app:app $APP_HOME
 USER app
 
+RUN chmod +x start_scrapping.sh
+
 ENTRYPOINT [ "/home/app/web/entrypoint.sh" ]
