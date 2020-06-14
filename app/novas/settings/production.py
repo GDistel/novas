@@ -1,14 +1,12 @@
 from .base import *
+import dj_database_url
 
-# ALLOWED_HOSTS = [
-#     'localhost',
-#     '127.0.0.1',
-# ]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', 'novas-server.herokuapp.com']
 
 #CORS_ORIGIN_WHITELIST = ()
 
 DEBUG = False
-SECURE_SSL_REDIRECT = True
+#SECURE_SSL_REDIRECT = True
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 X_FRAME_OPTIONS = 'DENY'
@@ -25,3 +23,12 @@ DATABASES = {
         "PORT": "5432",
     }
 }
+
+DATABASE_URL = os.environ.get("DATABASE_URL")
+db_from_env = dj_database_url.config(
+    default=DATABASE_URL, conn_max_age=500, ssl_require=True
+)
+if db_from_env:
+    DATABASES['default'].update(db_from_env)
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

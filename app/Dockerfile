@@ -1,5 +1,4 @@
 # Builder
-
 FROM python:3 as builder
 
 WORKDIR /usr/src/app
@@ -29,15 +28,13 @@ RUN addgroup --system app && adduser --system app && usermod -G app app
 # create the appropriate directories
 ENV HOME=/home/app
 ENV APP_HOME=/home/app/web
-RUN mkdir $APP_HOME
-RUN mkdir $APP_HOME/staticfiles
+RUN mkdir $APP_HOME && mkdir $APP_HOME/staticfiles
 WORKDIR $APP_HOME
 
 # install dependencies
 COPY --from=builder /usr/src/app/wheels /wheels
 COPY --from=builder /usr/src/app/requirements.txt .
-RUN pip install --upgrade pip
-RUN pip install --no-cache /wheels/*
+RUN pip install --upgrade pip && pip install --no-cache /wheels/*
 
 COPY ./entrypoint.sh $APP_HOME
 
@@ -50,3 +47,5 @@ USER app
 RUN chmod +x start_scrapping.sh
 
 ENTRYPOINT [ "/home/app/web/entrypoint.sh" ]
+
+CMD gunicorn novas.wsgi:application --bind 0.0.0.0:$PORT
