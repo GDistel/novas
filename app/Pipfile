@@ -11,6 +11,7 @@ djangorestframework = "*"
 requests = "*"
 bs4 = "*"
 gunicorn = "*"
+psycopg2 = "*"
 
 [requires]
 python_version = "3.6"
