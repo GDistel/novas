@@ -1,7 +1,7 @@
 import time
 import random
 from django.core.management.base import BaseCommand
-from scrapper.coto.routes import ROUTES
+from scrapper.coto.routes import ROUTES, ROUTE_BATCHES
 from scrapper.coto.utils import get_soup, get_detail_soup, scrap_product_data, scrap_detail_routes, get_all_detail_routes
 from scrapper.models import CotoProductModel, CotoProductPriceUpdateModel
 
@@ -14,6 +14,14 @@ class Command(BaseCommand):
             action='store_true',
             help='Pokes detail views to start scrapping product data, for dev purpose'
         )
+        parser.add_argument(
+              '--batch',
+               action = 'store',
+               dest = 'batch',
+               type = int,
+               default = 1,
+               help = 'Route batch number'
+        )
 
     def handle(self, *args, **options):
         if options['dev']:
@@ -21,7 +29,12 @@ class Command(BaseCommand):
             all_product_routes = scrap_detail_routes(soup)
             self.scrap_main_route(all_product_routes, 'almacen')
         else:
-            for route_name, route_link in ROUTES.items():
+            if options['batch']:
+                batch_number = options['batch']
+                routes_to_scrap = ROUTE_BATCHES[str(batch_number)]
+            else:
+                routes_to_scrap = ROUTES
+            for route_name, route_link in routes_to_scrap.items():
                 print('\n', 'Processing data for category: ', route_name, '\n')
                 all_product_routes = get_all_detail_routes(route_link, route_name)
                 self.scrap_main_route(all_product_routes, route_name)

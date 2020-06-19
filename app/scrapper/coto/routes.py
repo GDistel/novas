@@ -35,3 +35,9 @@ ROUTES_BATCH_2 = {
 ROUTES_BATCH_3 = {
     'hogar': 'https://www.cotodigital3.com.ar/sitios/cdigi/browse/catalogo-hogar/_/N-qa34ar',
 }
+
+ROUTE_BATCHES = {
+    '1': ROUTES_BATCH_1,
+    '2': ROUTES_BATCH_2,
+    '3': ROUTES_BATCH_3
+}

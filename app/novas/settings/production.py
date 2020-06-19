@@ -3,7 +3,7 @@ import dj_database_url
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', 'novas-server.herokuapp.com']
 
-#CORS_ORIGIN_WHITELIST = ()
+CORS_ORIGIN_ALLOW_ALL = True
 
 DEBUG = False
 #SECURE_SSL_REDIRECT = True
