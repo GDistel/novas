@@ -23,7 +23,7 @@ def unit_price(raw_unit_price):
 
 def capture_product_number(product_name):
     '''
-    See name_number doc
+    See name_number doc string
     '''
     result = re.findall(r'\((\d+)\)', product_name)
     if result is None:
