@@ -22,6 +22,14 @@ class Command(BaseCommand):
                default = 1,
                help = 'Route batch number'
         )
+        parser.add_argument(
+              '--route-key',
+               action = 'store',
+               dest = 'route-key',
+               type = str,
+               default = 1,
+               help = 'Route key'
+        )
 
     def handle(self, *args, **options):
         if options['dev']:
@@ -32,8 +40,10 @@ class Command(BaseCommand):
             if options['batch']:
                 batch_number = options['batch']
                 routes_to_scrap = ROUTE_BATCHES[str(batch_number)]
-            else:
-                routes_to_scrap = ROUTES
+            if options['route-key']:
+                key = options['route-key']
+                routes_to_scrap = {}
+                routes_to_scrap[key] = ROUTES[key]
             for route_name, route_link in routes_to_scrap.items():
                 print('\n', 'Processing data for category: ', route_name, '\n')
                 all_product_routes = get_all_detail_routes(route_link, route_name)
@@ -48,6 +58,7 @@ class Command(BaseCommand):
                 number = cleaned_product_data.get('number'),
                 defaults = {
                     'name': cleaned_product_data.get('name'),
+                    'category': route_name,
                     'bulk_purchase_amount': cleaned_product_data.get('bulk_purchase_amount'),
                     'bulk_purchase_measure': cleaned_product_data.get('bulk_purchase_measure'),
                     'categories_path': cleaned_product_data.get('categories_path'),

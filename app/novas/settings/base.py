@@ -17,7 +17,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'corsheaders',
     'rest_framework',
-    'scrapper'
+    'scrapper',
+    'django_admin_listfilter_dropdown'
 ]
 
 MIDDLEWARE = [

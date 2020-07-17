@@ -1,7 +1,20 @@
 from django.db import models
 
 class CotoProductModel(models.Model):
+    PRODUCT_CATEGORIES = (
+        ('almacen', 'almacen'),
+        ('bebidas', 'bebidas'),
+        ('frescos', 'frescos'),
+        ('congelados', 'congelados'),
+        ('limpieza', 'limpieza'),
+        ('perfumeria', 'perfumeria'),
+        ('electro', 'electro'),
+        ('textil', 'textil'),
+        ('hogar', 'hogar'),
+        ('aire_libre', 'aire_libre'),
+    )
     number = models.PositiveIntegerField(primary_key=True)
+    category = models.CharField(max_length=255, unique=False, choices=PRODUCT_CATEGORIES, null=True, blank=True)
     name = models.CharField(max_length=255, unique=False, null=True, blank=True)
     bulk_purchase_amount = models.PositiveIntegerField(unique=False, null=True, blank=True)
     bulk_purchase_measure = models.CharField(max_length=255, unique=False, null=True, blank=True)

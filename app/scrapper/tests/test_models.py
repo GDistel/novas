@@ -5,7 +5,8 @@ from datetime import datetime
 class CotoProductTestCase(TestCase):
     def setUp(self):
         CotoProductModel.objects.create(
-            name = "Gouda Cheese",
+            name = 'Gouda Cheese',
+            category = 'almacen',
             number = 123,
             bulk_purchase_amount = 2,
             bulk_purchase_measure = 'Kilograms',
@@ -18,8 +19,9 @@ class CotoProductTestCase(TestCase):
         """
         Test that the properties of the Coto Product Model are of the correct type
         """
-        product = CotoProductModel.objects.get(name="Gouda Cheese")
+        product = CotoProductModel.objects.get(name='Gouda Cheese')
         self.assertEqual(type(product.number), int)
+        self.assertEqual(type(product.category), str)
         self.assertEqual(type(product.name), str)
         self.assertEqual(type(product.bulk_purchase_amount), int)
         self.assertEqual(type(product.bulk_purchase_measure), str)
@@ -32,7 +34,8 @@ class CotoProductTestCase(TestCase):
 class CotoProductPriceUpdateTestCase(TestCase):
     def setUp(self):
         CotoProductModel.objects.create(
-            name = "Gouda Cheese",
+            name = 'Gouda Cheese',
+            category = 'almacen',
             number = 123,
             bulk_purchase_amount = 2,
             bulk_purchase_measure = 'Kilograms',
@@ -41,7 +44,7 @@ class CotoProductPriceUpdateTestCase(TestCase):
             link = 'https://www.google.com'
         ),
         CotoProductPriceUpdateModel.objects.create(
-            product = CotoProductModel.objects.get(name="Gouda Cheese"),
+            product = CotoProductModel.objects.get(name='Gouda Cheese'),
             unit_price = 17.5,
             promo_required_amount = 2,
             promo_unit_price = 15.3,
@@ -61,8 +64,3 @@ class CotoProductPriceUpdateTestCase(TestCase):
         self.assertEqual(type(price_update.text_price_discount), str)
         self.assertEqual(type(price_update.bulk_purchase_price), float)
         self.assertEqual(type(price_update.update_date), datetime)
-
-
-
-
-
