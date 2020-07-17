@@ -135,27 +135,25 @@ def get_next_page_route(soup, current_page_number):
 
 def get_all_detail_routes(category_route, route_name):
     '''
-    Scraps each product detail-page link. Returns an array with all these routes.
+    Scraps the link of each product detail page.
+    Returns a list with all these routes.
     '''
     all_detail_routes = []
     list_view_route = category_route
     page_number = 1
-    with open(f'scrapper/coto/.test_data/{route_name}_detail_routes.csv', mode='w') as detail_routes:
-        routes_file = csv.writer(detail_routes, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        routes_file.writerow(['List-view route'])
-        while page_number > 0:
-            print('Scraping routes in page', page_number, f'of {route_name}')
-            routes_file.writerow([list_view_route])
-            soup = get_soup(list_view_route)
-            page_detail_routes = scrap_detail_routes(soup)
-            all_detail_routes.extend(page_detail_routes)
-            next_list_view_route = get_next_page_route(soup, page_number)
-            if type(next_list_view_route) == str:
-                list_view_route = next_list_view_route
-                page_number += 1
-                time.sleep(random.randint(1,6))
-            else:
-                page_number = 0
+    while page_number > 0:
+        print('Scraping routes in page', page_number, f'of {route_name}')
+        # To do: Write list view route to DB
+        soup = get_soup(list_view_route)
+        page_detail_routes = scrap_detail_routes(soup)
+        all_detail_routes.extend(page_detail_routes)
+        next_list_view_route = get_next_page_route(soup, page_number)
+        if type(next_list_view_route) == str:
+            list_view_route = next_list_view_route
+            page_number += 1
+            time.sleep(random.randint(1,6))
+        else:
+            page_number = 0
 
     return all_detail_routes
 
