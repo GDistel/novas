@@ -1,6 +1,6 @@
 from django.test import TestCase
 from bs4 import BeautifulSoup
-from .cleaners import *
+from ..cleaners import *
 
 class CleanersTestCase(TestCase):
     def test_clean_string(self):
